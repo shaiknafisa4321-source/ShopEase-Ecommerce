@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShopEase{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">ShopEase</a>
+    <nav>
+        <a href="/">Shop</a>
+        {% if session.get('user_id') %}
+            <a href="/orders">Orders</a>
+            {% if session.get('role') == 'admin' %}<a href="/admin">Admin</a>{% endif %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
+        <button id="showCart">Cart (<span id="cartCount">0</span>)</button>
+    </nav>
+</header>
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+<div id="cartBox" class="cart-box" hidden>
+    <button id="closeCart" class="close">Close ✕</button>
+    <h2>Your cart</h2>
+    <div id="cartItems"></div>
+    <p>Total: <strong id="cartTotal">₹0</strong></p>
+    <button id="checkout" class="button">Checkout</button>
+    <p class="small">Demo checkout only. No real payment is collected.</p>
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Orders - ShopEase{% endblock %}
+{% block content %}
+<div class="page-title"><p class="tag">ORDER TRACKING</p><h1>My orders</h1></div>
+{% if orders %}
+    {% for order in orders %}
+    <div class="order">
+        <div>
+            <h3>Order #{{ order.id }} — {{ order.product_name }}</h3>
+            {% if order.customer %}<p>Customer: {{ order.customer }}</p>{% endif %}
+            <p>Quantity: {{ order.quantity }} · Total: ₹{{ order.total }}</p>
+            <p>Status: <strong>{{ order.status }}</strong></p>
+        </div>
+        {% if session.get('role') == 'admin' %}
+        <form method="POST" action="/update-order/{{ order.id }}" class="status-form">
+            <select name="status">
+                {% for status in ['Placed','Processing','Shipped','Delivered','Cancelled'] %}
+                <option value="{{ status }}" {% if order.status == status %}selected{% endif %}>{{ status }}</option>
+                {% endfor %}
+            </select>
+            <button class="button">Update</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="empty"><h2>No orders yet</h2><p>Your orders will appear here after checkout.</p><a href="/">Start shopping</a></div>
+{% endif %}
+{% endblock %}

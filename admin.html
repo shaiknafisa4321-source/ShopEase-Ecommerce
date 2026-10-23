@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Admin - ShopEase{% endblock %}
+{% block content %}
+<div class="page-title"><p class="tag">STORE MANAGEMENT</p><h1>Admin dashboard</h1></div>
+<div class="admin-layout">
+    <form method="POST" class="form-card">
+        <h2>Add a product</h2>
+        <label>Product name<input name="name" required></label>
+        <label>Description<input name="description" required></label>
+        <label>Price<input type="number" name="price" min="1" step="0.01" required></label>
+        <label>Image URL<input type="url" name="image" required></label>
+        <label>Stock<input type="number" name="stock" min="0" value="10" required></label>
+        <button class="button">Add product</button>
+    </form>
+    <section>
+        <h2>Products</h2>
+        {% for product in products %}
+        <div class="admin-product">
+            <div><strong>{{ product.name }}</strong><p>₹{{ product.price }} · Stock {{ product.stock }}</p></div>
+            <a class="delete" href="/delete-product/{{ product.id }}" onclick="return confirm('Delete this product?')">Delete</a>
+        </div>
+        {% endfor %}
+        <p><a href="/orders">Manage orders →</a></p>
+    </section>
+</div>
+{% endblock %}

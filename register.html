@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Register - ShopEase{% endblock %}
+{% block content %}
+<div class="form-wrap">
+    <form method="POST" class="form-card">
+        <p class="tag">JOIN SHOPEASE</p><h1>Create account</h1>
+        {% if error %}<p class="error">{{ error }}</p>{% endif %}
+        <label>Name<input type="text" name="name" required></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Password<input type="password" name="password" minlength="8" required></label>
+        <button class="button">Register</button>
+        <p>Already registered? <a href="/login">Login here</a></p>
+    </form>
+</div>
+{% endblock %}
